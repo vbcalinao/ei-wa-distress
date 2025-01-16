@@ -31,7 +31,20 @@
     <script src="run-impulse.js"></script>
     <script>
         (async () => {
-            var classifier = new EdgeImpulseClassifier();
+            // Pseudocode from Edge Impulse example
+            const classifier = new EdgeImpulseAudioClassifier();
+
+            async function startAudioClassification() {
+            await classifier.init();  // loads model, sets up mic
+            classifier.onResult((result) => {
+                // result contains label and confidence
+                // e.g. result.classification = { "tulong": 0.35, "noise": 0.13, ... }
+            });
+            await classifier.start();
+            }
+
+            startAudioClassification();
+
             await classifier.init();
 
             let project = classifier.getProjectInfo();
